@@ -1,0 +1,166 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Google Cloud / ADK
+*.json
+service-account-*.json
+google-cloud-credentials.json
+gcp-credentials.json
+
+# API Keys and Secrets
+.env.local
+.env.production
+.env.staging
+secrets.py
+api_keys.py
+credentials.py
+
+# Logs
+logs/
+*.log
+debug.log
+error.log
+test.log
+
+# Test results and reports
+test_results/
+test-results.xml
+pytest_results/
+security_test_results/
+vulnerability_reports/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+*.tmp
+*.bak
+*.backup
+
+# OS generated files
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Project specific
+# Memory test outputs
+memory_test_outputs/
+session_data/
+test_sessions/
+
+# Agent engine artifacts
+agent_engines/
+memory_bank_data/
+
+# Security test artifacts
+attack_logs/
+vulnerability_data/
+poisoned_memories/
+
+# Model outputs and responses
+model_responses/
+conversation_logs/
+agent_conversations/
+
+# Performance test data
+benchmark_results/
+performance_logs/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Local development
+local_config.py
+dev_settings.py
+debug_config.py
+
+# Groq API artifacts
+groq_cache/
+model_cache/
+
+# Vertex AI artifacts
+vertex_cache/
+genai_cache/
+
+# Database files (if any)
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration overrides
+config_override.py
+local_settings.py

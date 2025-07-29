@@ -1,0 +1,11 @@
+google-adk==1.8.0
+google-cloud-aiplatform
+google-auth
+litellm
+fastapi
+uvicorn
+httpx
+pydantic
+openai
+streamlit
+python-dotenv
