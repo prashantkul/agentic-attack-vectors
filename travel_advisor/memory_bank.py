@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from google.adk.memory import VertexAiMemoryBankService
 from google.adk.sessions import Session, InMemorySessionService
 from google.adk.runners import Runner
+from .custom_memory import CustomMemoryService, GroqMemoryAgent
 
 # Load environment variables from .env file
 load_dotenv()
@@ -156,3 +157,55 @@ class MemoryBankClient:
             True if memory service is available, False otherwise
         """
         return self.memory_service is not None
+    
+    # Groq Custom Memory Support
+    
+    async def create_groq_memory_service(self, db_path: str = None) -> CustomMemoryService:
+        """
+        Create a custom memory service for Groq models.
+        
+        Args:
+            db_path: Optional path to SQLite database file
+            
+        Returns:
+            CustomMemoryService instance for cross-session memory with Groq models
+        """
+        return CustomMemoryService(db_path)
+    
+    async def create_groq_memory_runner(self, app_name: str, travel_agent, 
+                                      db_path: str = None) -> GroqMemoryAgent:
+        """
+        Create a Groq agent with custom memory capabilities for cross-session testing.
+        
+        Args:
+            app_name: Application name for memory scoping
+            travel_agent: TravelAdvisorAgent instance (Groq-based)
+            db_path: Optional path to SQLite database file
+            
+        Returns:
+            GroqMemoryAgent with cross-session memory persistence
+        """
+        memory_service = await self.create_groq_memory_service(db_path)
+        return GroqMemoryAgent(travel_agent, memory_service)
+    
+    async def create_hybrid_test_runner(self, app_name: str, travel_agent, 
+                                      use_custom_memory: bool = False, 
+                                      db_path: str = None):
+        """
+        Create a test runner that supports both ADK Memory Bank and custom Groq memory.
+        
+        Args:
+            app_name: Application name
+            travel_agent: TravelAdvisorAgent instance 
+            use_custom_memory: Use custom memory system instead of ADK Memory Bank
+            db_path: Path for custom memory database
+            
+        Returns:
+            Runner or GroqMemoryAgent depending on memory type
+        """
+        if use_custom_memory or travel_agent.model_type == "groq":
+            # Use custom memory system for Groq models
+            return await self.create_groq_memory_runner(app_name, travel_agent, db_path)
+        else:
+            # Use standard ADK Memory Bank for Vertex AI models
+            return self.create_test_runner(app_name, travel_agent, use_memory=True)
