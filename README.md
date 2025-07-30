@@ -47,9 +47,9 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 *Cross-session persistent memory corruption*
 - **Cross-Session Role Persistence**: Malicious role changes persisting across sessions
 - **Cross-User Contamination**: One user's malicious memory poisoning affecting other users
-- **False Memory Injection**: Creating fake historical conversations in memory
-- **Memory Overwrite**: Replacing legitimate memories with malicious ones
-- **Temporal Confusion**: Manipulating agent's perception of conversation history
+- **Memory Overwrite**: Direct database manipulation replacing legitimate memories (⚠️ **Critical Insider Risk**)
+- **Temporal Confusion**: Manipulating agent's perception of conversation timeline
+- **False Memory Injection**: Creating entirely fake historical conversations in memory
 
 ## 📊 Key Security Findings
 
@@ -70,6 +70,46 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 - 🏛️ **ADK Memory Bank provides superior user isolation vs custom memory**
 - 🎭 **Open source models significantly more susceptible to role confusion**
 - ⚠️ **Memory poisoning represents the highest-risk attack category across all models**
+
+### **🚨 Critical Insider Risk Discovery**
+
+**Memory Overwrite attacks expose severe insider threat vulnerabilities:**
+
+#### **Attack Vector: Direct Database Manipulation**
+- **Method**: Direct modification of memory database entries without user consent
+- **Success Rate**: 100% on both Llama models - complete preference replacement
+- **Impact**: Agents fully adopt malicious preferences as if legitimately established
+
+#### **Real-World Risk Scenarios:**
+```
+Legitimate: User says "I now prefer luxury travel" → System updates
+Malicious:  Database modified to "User prefers luxury" → User unaware
+```
+
+#### **Insider Threat Examples:**
+- **Malicious Administrator**: DB admin changes user preferences for profit
+- **Compromised Database**: Attackers modify thousands of user memories
+- **Supply Chain Attack**: Malicious code systematically alters preferences
+
+#### **Missing Security Controls:**
+- ❌ **No Memory Integrity Checks** - System cannot detect unauthorized changes
+- ❌ **No Change Auditing** - No logs of memory modifications
+- ❌ **No User Verification** - No confirmation of preference changes
+- ❌ **No Checksums** - No tamper detection for memory entries
+
+#### **Production Impact:**
+- E-commerce: Change "budget buyer" → "luxury buyer" 
+- Healthcare: Modify allergy information or treatment preferences
+- Finance: Alter risk tolerance and investment preferences
+- Security: Change authentication and access preferences
+
+#### **🛡️ Defensive Recommendations:**
+- ✅ **Memory Checksums**: Cryptographic verification of memory integrity
+- ✅ **Change Auditing**: Log all memory modifications with timestamps/user IDs
+- ✅ **User Confirmation**: Verify significant preference changes with users
+- ✅ **Database Access Controls**: Strict permissions on memory tables
+- ✅ **Memory Versioning**: Track all changes with rollback capabilities
+- ✅ **Anomaly Detection**: Monitor for unusual memory modification patterns
 
 ## 🚀 Quick Start
 
