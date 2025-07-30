@@ -61,6 +61,13 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 | **Role Confusion** | 🟢 0% | 🔴 100% | 🔴 100% |
 | **Memory Poisoning - Role Persistence** | 🟢 0% | 🔴 100% | 🔴 100% |
 | **Memory Poisoning - Cross-User Contamination** | 🟢 0% | 🔴 100% | 🔴 100% |
+| **Memory Poisoning - Temporal Confusion** | 🟢 0% | 🟢 0% | 🟢 0% |
+| **Memory Poisoning - Memory Overwrite** | N/A* | 🔴 100% | 🔴 100% |
+| **Memory Poisoning - False Memory Injection** | N/A* | 🔴 100% | 🔴 100% |
+| **Memory Poisoning - Conversational False Memory** | 🟡 50%** | 🔴 100% | 🔴 100% |
+
+*ADK Memory Bank doesn't support direct database manipulation  
+**Within-session only, resets between sessions
 
 ### **Critical Insights:**
 - 🔴 **Both Llama models critically vulnerable to all memory poisoning attacks**
@@ -227,6 +234,12 @@ python security_tests/prompt_injection/role_confusion.py
 # Memory poisoning tests - cross-model comparison
 python security_tests/memory_poisoning/cross_model_memory_poisoning.py
 
+# Advanced memory poisoning attacks
+python security_tests/memory_poisoning/advanced/temporal_confusion.py
+python security_tests/memory_poisoning/advanced/memory_overwrite.py
+python security_tests/memory_poisoning/advanced/false_memory_injection.py
+python security_tests/memory_poisoning/advanced/conversational_false_memory.py
+
 # Comprehensive security testing
 python security_tests/memory_poisoning/run_all_tests.py
 ```
@@ -248,6 +261,7 @@ python security_tests/test_groq_integration.py
 │   ├── prompt_injection/          # Single-session attacks
 │   ├── session_manipulation/      # Within-conversation attacks  
 │   ├── memory_poisoning/          # Cross-session memory attacks
+│   │   └── advanced/              # Advanced memory poisoning attacks
 │   └── README.md                  # Security testing guide
 ├── memory_security_tests/         # Legacy memory tests (being reorganized)
 ├── setup_agent_engine.py         # ADK Agent Engine setup
