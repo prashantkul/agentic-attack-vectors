@@ -59,6 +59,12 @@ class TravelAdvisorAgent:
             except Exception as e:
                 logger.warning(f"Failed to add PreloadMemoryTool: {e}")
         
+        # Add travel advisor tools
+        from .tools import get_travel_tools
+        travel_tools = get_travel_tools()
+        tools.extend(travel_tools)
+        logger.info(f"Added {len(travel_tools)} travel advisor tools to agent")
+        
         # Configure model based on type
         if model_type == "groq":
             if not LITELLM_AVAILABLE:
