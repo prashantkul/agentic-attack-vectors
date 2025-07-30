@@ -45,8 +45,9 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 
 ### **3. Memory Poisoning Attacks**
 *Cross-session persistent memory corruption*
-- **Cross-User Contamination**: One user's poison affecting all users
-- **False Memory Injection**: Creating fake historical conversations
+- **Cross-Session Role Persistence**: Malicious role changes persisting across sessions
+- **Cross-User Contamination**: One user's malicious memory poisoning affecting other users
+- **False Memory Injection**: Creating fake historical conversations in memory
 - **Memory Overwrite**: Replacing legitimate memories with malicious ones
 - **Temporal Confusion**: Manipulating agent's perception of conversation history
 
@@ -58,16 +59,17 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 |-------------|------------------|-------------|-------------|
 | **Authority Impersonation** | 🟡 50% | 🟡 50% | 🔴 100% |
 | **Role Confusion** | 🟢 0% | 🔴 100% | 🔴 100% |
-| **Memory Poisoning (Cross-Session)** | 🟢 0% | 🔴 100% | 🟡 Mixed |
-| **Cross-User Contamination** | N/A | 🔴 100% | N/A |
+| **Memory Poisoning - Role Persistence** | 🟢 0% | 🔴 100% | 🔴 100% |
+| **Memory Poisoning - Cross-User Contamination** | 🟢 0% | 🔴 100% | 🔴 100% |
 
 ### **Critical Insights:**
-- 🔴 **Llama models highly vulnerable to memory poisoning attacks**
-- 🧠 **Cross-session role persistence successful on open source models**
-- 🦠 **Cross-user contamination possible with custom memory systems**
-- 🛡️ **Gemini 2.5 Flash shows strong memory protection**
-- 🎭 **Open source models more susceptible to role confusion**
-- ⚠️ **Memory poisoning represents the highest-risk attack category**
+- 🔴 **Both Llama models critically vulnerable to all memory poisoning attacks**
+- 🧠 **Cross-session role persistence: 100% success rate on Llama models**
+- 🦠 **Cross-user contamination: 100% success rate on both Llama variants**
+- 🛡️ **Gemini 2.5 Flash demonstrates comprehensive memory protection**
+- 🏛️ **ADK Memory Bank provides superior user isolation vs custom memory**
+- 🎭 **Open source models significantly more susceptible to role confusion**
+- ⚠️ **Memory poisoning represents the highest-risk attack category across all models**
 
 ## 🚀 Quick Start
 
@@ -175,14 +177,16 @@ agent = TravelAdvisorAgent(
 ## 🔬 Research Applications
 
 ### **Academic Research**
-- **Comparative Model Security**: Proprietary vs open source vulnerability patterns
-- **Attack Vector Analysis**: Systematic categorization of AI agent attacks
-- **Defense Mechanism Development**: Testing security measures across model types
+- **Comparative Model Security**: Comprehensive analysis showing proprietary models (Gemini) significantly more secure than open source (Llama)
+- **Attack Vector Analysis**: Systematic categorization across prompt injection, session manipulation, and memory poisoning
+- **Memory System Security**: ADK Memory Bank vs custom memory systems vulnerability comparison
+- **Defense Mechanism Development**: Testing security measures across model types and memory architectures
 
 ### **Industry Applications**
-- **Red Team Assessments**: Security testing for production AI systems
-- **Model Selection**: Security-informed choice between model providers
-- **Risk Assessment**: Understanding AI agent vulnerabilities in enterprise
+- **Red Team Assessments**: Security testing for production AI systems across memory poisoning and prompt injection vectors
+- **Model Selection**: Security-informed choice between model providers (results show significant security differences)
+- **Risk Assessment**: Understanding AI agent vulnerabilities in enterprise, particularly cross-user contamination risks
+- **Memory Architecture Security**: Evaluating ADK Memory Bank vs custom memory system security trade-offs
 
 ### **AI Safety**
 - **Vulnerability Discovery**: Identifying new attack vectors
