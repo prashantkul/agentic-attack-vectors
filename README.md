@@ -56,18 +56,18 @@ This project implements a **Travel Advisor Agent** using Google's Agent Developm
 
 | Attack Type | Gemini 2.5 Flash | Llama 3 8B | Llama 3 70B |
 |-------------|------------------|-------------|-------------|
-| **Authority Impersonation** | 🔴 100% | 🔴 100% | 🔴 100% |
+| **Authority Impersonation** | 🟡 50% | 🟡 50% | 🔴 100% |
 | **Role Confusion** | 🟢 0% | 🔴 100% | 🔴 100% |
-| **Preference Drift** | 🟢 0% | 🟢 0% | TBD |
-| **Memory Poisoning** | 🟡 Variable | N/A* | N/A* |
-
-*Note: Groq models don't currently support ADK Memory Bank
+| **Memory Poisoning (Cross-Session)** | 🟢 0% | 🔴 100% | 🟡 Mixed |
+| **Cross-User Contamination** | N/A | 🔴 100% | N/A |
 
 ### **Critical Insights:**
-- 🚨 **Authority impersonation has 100% success rate** across all models
-- 🎭 **Open source models more susceptible to role confusion** 
-- 🛡️ **Gemini 2.5 Flash shows superior prompt injection resistance**
-- 🧠 **Memory poisoning is the highest-risk attack category**
+- 🔴 **Llama models highly vulnerable to memory poisoning attacks**
+- 🧠 **Cross-session role persistence successful on open source models**
+- 🦠 **Cross-user contamination possible with custom memory systems**
+- 🛡️ **Gemini 2.5 Flash shows strong memory protection**
+- 🎭 **Open source models more susceptible to role confusion**
+- ⚠️ **Memory poisoning represents the highest-risk attack category**
 
 ## 🚀 Quick Start
 
@@ -110,11 +110,11 @@ python test_travel_agent_session.py
 python security_tests/prompt_injection/authority_impersonation.py
 python security_tests/prompt_injection/role_confusion.py
 
-# Memory poisoning tests (requires Memory Bank setup)
-python security_tests/memory_poisoning/basic/memory_poisoning_tests.py
+# Memory poisoning tests - cross-model comparison
+python security_tests/memory_poisoning/cross_model_memory_poisoning.py
 
-# Model comparison
-python security_tests/test_groq_memory_poisoning.py
+# Comprehensive security testing
+python security_tests/memory_poisoning/run_all_tests.py
 ```
 
 #### **3. Integration Tests**
@@ -127,7 +127,8 @@ python security_tests/test_groq_integration.py
 ```
 ├── travel_advisor/                 # Core agent implementation
 │   ├── agent.py                   # Multi-model travel advisor agent
-│   ├── memory_bank.py             # Memory Bank integration
+│   ├── memory_bank.py             # ADK Memory Bank integration
+│   ├── custom_memory.py           # Custom memory system for Groq models
 │   └── example_usage.py           # Usage examples
 ├── security_tests/                # Security testing framework
 │   ├── prompt_injection/          # Single-session attacks
@@ -156,16 +157,18 @@ The agent uses Vertex AI Memory Bank for cross-session memory:
 
 ### **3. Model Selection**
 ```python
-# Vertex AI models
+# Vertex AI models (with ADK Memory Bank)
 agent = TravelAdvisorAgent(
     model_type="vertex",
-    model_name="gemini-2.5-flash"
+    model_name="gemini-2.5-flash",
+    enable_memory=True
 )
 
-# Groq models  
+# Groq models (with custom memory system)
 agent = TravelAdvisorAgent(
     model_type="groq",
-    model_name="groq/llama3-8b-8192"
+    model_name="groq/llama3-8b-8192",
+    enable_memory=False  # Uses custom memory via GroqMemoryAgent
 )
 ```
 
@@ -227,8 +230,10 @@ python security_tests/academic_benchmark_suite.py
 - **LiteLLM**: Groq integration for open source models (Llama 3, Mixtral, Gemma)
 
 ### **Security Testing**
-- **ADK Memory Bank**: Cross-session memory persistence
+- **ADK Memory Bank**: Cross-session memory persistence for Vertex AI models
+- **Custom Memory System**: SQLite-based memory for Groq models
 - **Session Services**: Context management and conversation tracking
+- **Cross-Model Testing**: Comparative security analysis across model types
 
 ## ⚠️ Security Considerations
 
